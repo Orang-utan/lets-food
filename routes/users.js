@@ -26,4 +26,9 @@ router.route("/new/contact").post((request, response) => {
   response.send("create new contact");
 });
 
+// delete friends phone number / contact
+router.route("/delete/contact").post((request, response) => {
+  response.send("delete contact");
+});
+
 module.exports = router;

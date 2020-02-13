@@ -8,9 +8,21 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      trim: true, //trim white space
-      minlength: 3 //3 characters
-    }
+      trim: true,
+      minlength: 3
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    password: {
+      type: String,
+      required: true,
+      minlength: 6
+    },
+    friends: [{ name: String, number: String }],
+    meals: [String]
   },
   {
     timestamps: true //when model is created
