@@ -3,8 +3,14 @@ import React from "react";
 const Confirm = ({ match }) => {
   return (
     <div>
-      <h1>This is confirm</h1>
-      Rendering confirmation number {match.params.id}
+      <center style={{ marginTop: "20vh" }}>
+        <img
+          src="/confirm/verified.png"
+          style={{ width: "10%", height: "10%" }}
+        />
+        <h1>Thanks! Your meal with John is confirmed</h1>
+        <p>Here's your confirmation number: {match.params.id}.</p>
+      </center>
     </div>
   );
 };
