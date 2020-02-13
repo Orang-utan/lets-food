@@ -1,16 +1,18 @@
-require("dotenv").config();
+require("dotenv").config({ path: "../.env" });
 const accountSid = process.env.TWILIO_SID;
 const authToken = process.env.TWIOLIO_AUTH_TOKEN;
 const client = require("twilio")(accountSid, authToken);
 
-const sendSms = () => {
+// messege is a string "hello world"
+// number is follow this format "+16262617200"
+const sendSms = (messege, number) => {
   client.messages
     .create({
-      body: "This is the ship that made the Kessel Run in fourteen parsecs?",
+      body: messege,
       from: "+16262617200",
-      to: "+15106041131"
+      to: number
     })
     .then(message => console.log(message.sid));
 };
 
-sendSms();
+exports.sendSms = sendSms;
