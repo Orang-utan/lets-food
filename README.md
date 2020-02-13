@@ -1,2 +1,3 @@
-% Let's Food
-a platform to get dinner with friends
+### Let's Food ###
+
+A platform to get dinner with friends
