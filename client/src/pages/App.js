@@ -4,8 +4,10 @@ import Home from "./Home";
 import Friends from "./Friends";
 import Confirm from "./Confirm";
 import BrokenLink from "./BrokenLink";
+import Login from "./Login";
+import Signup from "./Signup";
 
-function App() {
+const App = () => {
   return (
     <div>
       <BrowserRouter>
@@ -13,11 +15,13 @@ function App() {
           <Route path="/" exact component={Home} />
           <Route path="/confirm/:id" exact component={Confirm} />
           <Route path="/friends" exact component={Friends} />
+          <Route path="/login" exact component={Login} />
+          <Route path="/signup" exact component={Signup} />
           <Route path="/" component={BrokenLink} />
         </Switch>
       </BrowserRouter>
     </div>
   );
-}
+};
 
 export default App;

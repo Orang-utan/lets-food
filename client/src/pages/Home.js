@@ -1,5 +1,6 @@
 import React from "react";
 import { PageHeader, Button } from "antd";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -10,10 +11,14 @@ const Home = () => {
         }}
         title="Let's Eat"
         extra={[
-          <Button key="2">Login</Button>,
-          <Button key="1" type="primary">
-            Sign Up
-          </Button>
+          <Link to="/login">
+            <Button key="2">Login</Button>
+          </Link>,
+          <Link to="/signup">
+            <Button key="1" type="primary">
+              Sign Up
+            </Button>
+          </Link>
         ]}
       />
       <div>
@@ -23,6 +28,7 @@ const Home = () => {
             Tap the button below to let see which of your friends are down for
             dinner in the next 15 minutes. Dining hall will be randomly chosen.
           </p>
+
           <Button
             style={{ margin: "0px 20px" }}
             type="primary"
@@ -32,9 +38,11 @@ const Home = () => {
           >
             Create
           </Button>
-          <Button shape="round" icon="user-add" size="large">
-            Friends
-          </Button>
+          <Link to="/friends">
+            <Button shape="round" icon="user-add" size="large">
+              Friends
+            </Button>
+          </Link>
         </center>
       </div>
     </div>
