@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Meal = require("../models/meal.model");
 const utils = require("../utils/utils");
+const sms_client = require("../utils/sms_client");
 
 // testing
 router.route("/").get((request, response) => {
@@ -28,6 +29,12 @@ router.route("/add").post((request, response) => {
     unconfirmed,
     attendees
   });
+
+  // send each friend a message, with their unique url
+  // sms_client.sendSms(
+  //   "Your friend John Smith wants to grab lunch at Hill in 15 minutes. Click this LINK if you want to join him. - Sent by Let's Food",
+  //   "+15106041131"
+  // );
 
   newMeal
     .save()

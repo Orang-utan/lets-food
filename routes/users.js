@@ -22,6 +22,7 @@ router.route("/login").get((request, response) => {
 });
 
 // add new friends phone number / contact
+// make sure user only has 10 friends at once
 router.route("/new/contact").post((request, response) => {
   response.send("create new contact");
 });
