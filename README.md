@@ -12,7 +12,7 @@ A platform to get dinner with friends
 - [ ] Implement matching algorithm
 - [ ] Create beautiful landing page
 
-## Future Functionality to Add
+## Future Functionalities to Add
 - [ ] Native Mobile Apps
 - [ ] Surprise Me! / Random Pairing Feature
 - [ ] Friendship Status Manager
