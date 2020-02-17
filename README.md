@@ -1,4 +1,4 @@
-### Let's Food ###
+## Let's Food ###
 
 A platform to get dinner with friends
 
@@ -11,5 +11,10 @@ A platform to get dinner with friends
 - [ ] Create Authorization Middleware
 - [ ] Implement matching algorithm
 - [ ] Create beautiful landing page
+
+## Future Functionality to Add
+- [ ] Native Mobile Apps
+- [ ] Surprise Me! / Random Pairing Feature
+- [ ] Friendship Status Manager
 
 
