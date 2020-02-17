@@ -7,6 +7,7 @@ A platform to get dinner with friends (Work In Progress)
 ## Get Started
 - Clone this repo
 - Cd directory
+- touch .env
 - yarn install
 - yarn dev
 
