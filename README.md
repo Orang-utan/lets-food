@@ -7,9 +7,9 @@ A platform to get dinner with friends
 ## Project Road Map
 - [x] Setup Frontend UI
 - [x] Setup Backend Test Routes
-- [] Create Authentication System
-- [] Create Authorization Middleware
-- [] Implement matching algorithm
-- [] Create beautiful landing page
+- [ ] Create Authentication System
+- [ ] Create Authorization Middleware
+- [ ] Implement matching algorithm
+- [ ] Create beautiful landing page
 
 
