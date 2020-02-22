@@ -37,8 +37,8 @@ const UserSchema = new Schema(
   }
 );
 
-UserSchema.methods.generateAuthToken = id => {
-  const payload = { _id: id };
+UserSchema.methods.generateAccessToken = userId => {
+  const payload = { userId: userId };
   const token = jwt.sign(payload, jwtSecret);
   return token;
 };

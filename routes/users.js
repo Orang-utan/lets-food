@@ -4,20 +4,18 @@ const { User, validate } = require("../models/user.model");
 const auth = require("../middleware/auth");
 
 // testing
-router.route("/").get((request, response) => {
+router.get("/", (request, response) => {
   response.send("Hello world from the users route!");
 });
 
 // who am i
 router.get("/me", auth, async (request, response) => {
-  const user = await User.findById({ _id: request.payload._id }).select(
-    "-password"
-  );
+  const user = await User.findById({ _id: request.userId }).select("-password");
   response.send(user);
 });
 
 // user signup
-router.route("/signup").post(async (request, response) => {
+router.post("/signup", async (request, response) => {
   const firstName = request.body.firstName;
   const lastName = request.body.lastName;
   const email = request.body.email;
@@ -46,19 +44,36 @@ router.route("/signup").post(async (request, response) => {
   newUser.password = await bcrypt.hash(password, salt);
   await newUser.save();
 
-  // generate token here
-  const token = newUser.generateAuthToken(newUser._id);
-  response.header("x-auth-token", token).send({
-    _id: newUser._id,
-    firstName: newUser.firstName,
-    lastName: newUser.lastName,
-    email: newUser.email
-  });
+  response.send("User created!");
 });
 
 // user login
-router.route("/login").get((request, response) => {
+router.get("/login", async (request, response) => {
+  const email = request.body.email;
+  const password = request.body.password;
+
+  const user = await User.findOne({ email: email });
+  if (!user) {
+    response.status(400).send("Either email or password is incorrect");
+  }
+
+  const valid = bcrypt.compare(password, user.password);
+  if (!valid) {
+    response.status(400).send("Either email or password is incorrect");
+  }
+
+  // generate token here
+  const accessToken = user.generateAccessToken(user._id);
+
+  response.cookie("access-token", accessToken);
+
   response.send("Login success");
+});
+
+// invalidate token
+router.get("/invalidateToken", auth, async (_, response) => {
+  response.clearCookie("access-token");
+  response.send("Token invalidated");
 });
 
 // add new friends phone number / contact
