@@ -29,5 +29,3 @@ const getUniqueID = () => {
 };
 
 exports.getUniqueID = getUniqueID;
-
-console.log(getUniqueID());
