@@ -1,7 +1,23 @@
 import React from "react";
 import { PageHeader, Button, Form, Icon, Input } from "antd";
+import { Link } from "react-router-dom";
+import { baseUrl } from "../config";
+import axios from "axios";
 
 const Login = ({ history }) => {
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    axios.post(
+      baseUrl + "/users/login",
+      {
+        email: "dtian@gmail.com",
+        password: "123456"
+      },
+      { withCredentials: true }
+    );
+  };
+
   return (
     <div>
       <PageHeader
@@ -15,8 +31,13 @@ const Login = ({ history }) => {
       />
       <div>
         <center style={{ marginTop: "20px" }}>
-          <h1>Login</h1>
-          <Form style={{ margin: "0 40vw" }}>
+          <h1>
+            <b>Login</b> below
+          </h1>
+          <p>
+            Don't have an account? <Link to="/signup">Sign Up</Link>
+          </p>
+          <Form style={{ margin: "0 40vw" }} onSubmit={handleSubmit}>
             <Form.Item>
               <Input
                 prefix={
