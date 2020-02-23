@@ -29,7 +29,12 @@ const UserSchema = new Schema(
       required: true,
       minlength: 6
     },
-    friends: [{ name: String, number: String }],
+    friends: [
+      {
+        name: { type: String, required: true },
+        number: { type: String, required: true, unique: true }
+      }
+    ],
     meals: [String]
   },
   {
@@ -45,7 +50,7 @@ UserSchema.methods.generateAccessToken = userId => {
 
 const User = mongoose.model("User", UserSchema);
 
-const validateUser = user => {
+const validateSignup = user => {
   const schema = {
     firstName: joi
       .string()
@@ -73,7 +78,26 @@ const validateUser = user => {
   return joi.validate(user, schema);
 };
 
+const validateLogin = user => {
+  const schema = {
+    email: joi
+      .string()
+      .min(5)
+      .max(255)
+      .required()
+      .email(),
+    password: joi
+      .string()
+      .min(6)
+      .max(255)
+      .required()
+  };
+
+  return joi.validate(user, schema);
+};
+
 module.exports = {
   User: User,
-  validate: validateUser
+  validateSignup: validateSignup,
+  validateLogin: validateLogin
 };

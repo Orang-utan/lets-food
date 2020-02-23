@@ -8,14 +8,21 @@ const Login = ({ history }) => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    axios.post(
-      baseUrl + "/users/login",
-      {
-        email: "dtian@gmail.com",
-        password: "123456"
-      },
-      { withCredentials: true }
-    );
+    axios
+      .post(
+        baseUrl + "/users/login",
+        {
+          email: "dian@gmail.com",
+          password: "123456"
+        },
+        { withCredentials: true }
+      )
+      .then(data => {
+        history.push("/");
+      })
+      .catch(error => {
+        console.log("error");
+      });
   };
 
   return (
