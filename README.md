@@ -11,6 +11,13 @@ A platform to get dinner with friends (Work In Progress)
 - yarn install
 - yarn dev
 
+## Enviroment File
+Here are the variables in the ".env" file:
+- ATLAS_URI
+- TWILIO_SID
+- TWILIO_AUTH_TOKEN
+- JWT_SECRET
+
 ## Project Road Map
 - [x] Setup Frontend UI
 - [x] Setup Backend Test Routes
