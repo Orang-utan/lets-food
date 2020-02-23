@@ -13,7 +13,7 @@ const auth = (req, res, next) => {
     const data = jwt.verify(accessToken, jwtSecret);
     req.userId = data.userId;
     next();
-  } catch (erropr) {
+  } catch (error) {
     res.status(400).send("Invalid token.");
   }
 };
