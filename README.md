@@ -29,6 +29,7 @@ Here are the variables in the ".env" file:
 - [x] Create Authentication System
 - [x] Create Authorization Middleware
 - [ ] Implement matching algorithm
+- [ ] Friend URL Confirmation Mechanism
 - [ ] Create beautiful landing page
 
 ## Future Functionalities to Add
