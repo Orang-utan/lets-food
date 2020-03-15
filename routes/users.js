@@ -10,7 +10,6 @@ router.post("/signup", async (request, response) => {
   const email = request.body.email;
   const password = request.body.password;
   const friends = [];
-  const meals = [];
 
   // validate data
   const { error } = validateSignup(request.body);
@@ -25,8 +24,7 @@ router.post("/signup", async (request, response) => {
     lastName,
     email,
     password,
-    friends,
-    meals
+    friends
   });
 
   const salt = await bcrypt.genSalt(10);
@@ -47,12 +45,16 @@ router.post("/login", async (request, response) => {
 
   const user = await User.findOne({ email: email });
   if (!user) {
-    response.status(400).send("Either email or password is incorrect");
+    return response
+      .status(400)
+      .send({ error: "Either email or password is incorrect" });
   }
 
   const valid = bcrypt.compare(password, user.password);
   if (!valid) {
-    response.status(400).send("Either email or password is incorrect");
+    return response
+      .status(400)
+      .send({ error: "Either email or password is incorrect" });
   }
 
   // generate token here

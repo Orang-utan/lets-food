@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
+var http = require("http");
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -37,6 +38,8 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-app.listen(port, () => {
+let server = http.createServer(app);
+
+server.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
 });

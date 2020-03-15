@@ -12,7 +12,7 @@ const Login = ({ history }) => {
       .post(
         baseUrl + "/users/login",
         {
-          email: "dian@gmail.com",
+          email: "dtian@gmail.com",
           password: "123456"
         },
         { withCredentials: true }
@@ -21,7 +21,7 @@ const Login = ({ history }) => {
         history.push("/");
       })
       .catch(error => {
-        console.log("error");
+        console.log(error.response.data);
       });
   };
 

@@ -4,6 +4,7 @@
   "main": "server.js",
   "license": "MIT",
   "scripts": {
+    "clean": "kill-port 8000",
     "server": "nodemon server.js",
     "client": "cd client && yarn start",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
@@ -18,6 +19,7 @@
     "express": "^4.17.1",
     "joi": "^14.3.1",
     "jsonwebtoken": "^8.5.1",
+    "kill-port": "^1.6.0",
     "mongoose": "^5.8.12",
     "nodemon": "^2.0.2",
     "shortid": "^2.2.15",

@@ -6,19 +6,21 @@ const Schema = mongoose.Schema;
 // each recipient who confirms, gets moved to attendees array
 // note the id for the attendees is generated upon creation
 // these ids are unique urls that will sent via text
-const mealSchema = new Schema(
-  {
-    creator: { type: String, required: true },
-    creatorId: { type: String, required: true },
-    available: { type: Boolean, required: true },
-    location: { type: String, required: false },
-    unconfirmed: [{ name: String, phone: String, url: String }],
-    attendees: [{ name: String, phone: String, url: String }]
-  },
-  {
-    timestamps: true //when model is created
-  }
-);
+const mealSchema = new Schema({
+  creatorId: { type: String, required: true },
+  available: { type: Boolean, required: true },
+  location: { type: String, required: true },
+  createdAt: { type: Date, default: Date.now },
+  friends: [
+    {
+      name: { type: String, required: true },
+      number: { type: String, required: true },
+      url: { type: String, required: true },
+      _id: { type: String, required: true },
+      attending: { type: Boolean, required: true }
+    }
+  ]
+});
 
 const Meal = mongoose.model("Meal", mealSchema);
 

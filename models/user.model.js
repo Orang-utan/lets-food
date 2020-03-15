@@ -34,8 +34,7 @@ const UserSchema = new Schema(
         name: { type: String, required: true },
         number: { type: String, required: true, unique: true }
       }
-    ],
-    meals: [String]
+    ]
   },
   {
     timestamps: true //when model is created
