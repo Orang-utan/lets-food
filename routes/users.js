@@ -10,6 +10,7 @@ router.post("/signup", async (request, response) => {
   const email = request.body.email;
   const password = request.body.password;
   const friends = [];
+  const meals = [];
 
   // validate data
   const { error } = validateSignup(request.body);
@@ -24,7 +25,8 @@ router.post("/signup", async (request, response) => {
     lastName,
     email,
     password,
-    friends
+    friends,
+    meals
   });
 
   const salt = await bcrypt.genSalt(10);

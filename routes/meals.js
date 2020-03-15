@@ -5,11 +5,6 @@ const utils = require("../utils/utils");
 const auth = require("../middleware/auth");
 const sms_client = require("../utils/sms_client");
 
-// testing
-router.route("/").get((request, response) => {
-  response.send("Hello world from the meals route!");
-});
-
 // add meal
 // expect an array of friends in the request
 router.post("/add", auth, async (request, response) => {
@@ -17,6 +12,13 @@ router.post("/add", auth, async (request, response) => {
   const creator = await User.findOne({ _id: creatorId });
   const creatorName = creator.firstName + " " + creator.lastName;
   const creatorFriends = creator.friends;
+
+  if (creatorFriends.length === 0) {
+    return response
+      .status(400)
+      .json("Error: You must add at least one friend to create meal.");
+  }
+
   const available = true;
   const location = utils.getRandomDiningHall();
   var friends = [];
@@ -33,6 +35,7 @@ router.post("/add", auth, async (request, response) => {
 
     friends.push(friend);
 
+    // // UNCOMMENT THIS LINE TO SEND TEXT
     // sms_client.sendSms(
     //   `Your friend ${creatorName} wants to grab lunch at ${location} in 15 minutes. Click this ${item.url} if you want to join him. - Sent by Let's Food`,
     //   item.number
@@ -48,37 +51,71 @@ router.post("/add", auth, async (request, response) => {
 
   await newMeal.save();
 
-  response.json(newMeal);
+  User.findById({ _id: creatorId }).then(user => {
+    let meals = user.meals;
+    meals.unshift(newMeal._id);
+
+    user
+      .save()
+      .then(() => response.json("New meal created"))
+      .catch(error => response.status(400).json("Error:" + error));
+  });
 });
 
 // get meal
-router.route("/:id").get((request, response) => {
+router.get("/:id", auth, (request, response) => {
+  const uid = request.userId;
   Meal.findById(request.params.id)
-    .then(meal => response.json(meal))
+    .then(meal => {
+      if (meal.creatorId !== uid) {
+        return response
+          .status(401)
+          .json("Error: You do not have permission to modify this meal.");
+      }
+      response.json(meal);
+    })
     .catch(error => response.status(400).json("Error: " + error));
 });
 
 // delete meal
-router.route("/:id").delete((request, response) => {
-  Meal.findByIdAndDelete(request.params.id)
-    .then(() => response.json("meal deleted."))
-    .catch(error => response.status(400).json("Error: " + error));
-});
-
-// close meal, prevent new people from joining
-router.route("/close/:id").get((request, response) => {
+router.delete("/:id", auth, (request, response) => {
+  const uid = request.userId;
   Meal.findById(request.params.id)
     .then(meal => {
-      meal.available = !meal.available;
-
-      meal
-        .save()
-        .then(() => response.json("meal closed!"))
+      if (meal.creatorId !== uid) {
+        return response
+          .status(401)
+          .json("Error: You do not have permission to modify this meal.");
+      }
+      Meal.findByIdAndDelete(request.params.id)
+        .then(() => response.json("meal deleted."))
         .catch(error => response.status(400).json("Error: " + error));
     })
     .catch(error => response.status(400).json("Error: " + error));
 });
 
+// close the meal (prevent people from joining)
+router.get("/close/:id", auth, (request, response) => {
+  const uid = request.userId;
+  Meal.findById(request.params.id)
+    .then(meal => {
+      if (meal.creatorId !== uid) {
+        return response
+          .status(401)
+          .json("Error: You do not have permission to modify this meal.");
+      }
+
+      meal.available = false;
+
+      meal
+        .save()
+        .then(() => response.json("meal closed"))
+        .catch(error => response.status(400).json("Error: " + error));
+    })
+    .catch(error => response.status(400).json("Error: " + error));
+});
+
+// confirm the meal
 router.get("/confirm/:id", async (request, response) => {
   const confirmId = request.params.id;
 
